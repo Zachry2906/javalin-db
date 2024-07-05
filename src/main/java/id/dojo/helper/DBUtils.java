@@ -22,6 +22,20 @@ public class DBUtils<T>{
         }
     }
 
+    public Res<List<T>> listActor(String query, Integer id, Class<T> type){
+        try (org.sql2o.Connection con = Sql2o.open()) {
+            List<T> data = con.createQuery(query).withParams(id).executeAndFetch(type);
+            return new Res<List<T>>("Berhasil ambil data film", data);
+        } catch (Sql2oException e) {
+            e.printStackTrace();
+            return new Res<List<T>>(e.toString(), null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Res(e.toString(), null);
+        }
+    }
+
+
     public  Res<T> get(String query, Object params, Class<T> type){
         try (org.sql2o.Connection con = Sql2o.open()) {
             T data = con.createQuery(query).withParams(params).executeAndFetchFirst(type);

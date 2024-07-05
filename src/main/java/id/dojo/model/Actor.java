@@ -68,6 +68,16 @@ public class Actor {
         }
     }
 
+    public static Res<List<Actor>> getActorById(Integer film_id) {
+        String sql = "SELECT fa.actor_id, a.first_name, a.last_name, a.last_update " +
+                     "FROM film_actor fa " +
+                     "JOIN actor a ON fa.actor_id = a.actor_id " +
+                     "WHERE fa.film_id = :p1";
+        
+        Res<List<Actor>> data = new DBUtils<Actor>().listActor(sql, film_id, Actor.class);
+            return new Res<>("Berhasil fetch", data.getData());
+    }
+
     public static Res<Integer> deleteActor(int actor_id) {
         try (Connection con = sql2o.open()) {
             System.out.println("Connected to database");

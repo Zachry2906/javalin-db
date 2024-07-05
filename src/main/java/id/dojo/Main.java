@@ -15,6 +15,7 @@ public class Main {
                     //ActorController.listaActor harus secara eksplisit dideklarasikan sebagai handler
                     .get("/actors", ActorController.listActor)
                     .get("/actor/<id>", ActorController.getActor)
+                    .get("/film-actor", FilmController.listFilmJoinActor)
                     .put("/actor/update", ActorController.updateActor)
                     .post("/actor", ActorController.insertActor)
                     .delete("/actor/delete", ActorController.deleteActor)

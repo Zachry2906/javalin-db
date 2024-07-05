@@ -9,6 +9,8 @@ public class Film {
     private Integer film_id;
     private String title;
     private String description;
+    private Integer actor_in_film;
+    List<Actor> actor;
 
     public static Res<List<Film>> listFilm(){
         Res<List<Film>> data = new DBUtils<Film>().list("SELECT film_id, title, description FROM film;", Film.class);
@@ -20,4 +22,20 @@ public class Film {
         return data;
     }
     
+    public static Res<List<Film>> listFilmJoinActor(){
+        Res<List<Film>> data = new DBUtils<Film>().list("SELECT f.film_id, COUNT(DISTINCT a.actor_id) AS actor_in_film FROM film f JOIN film_actor fa ON f.film_id = fa.film_id JOIN actor a ON fa.actor_id = a.actor_id GROUP BY f.film_id LIMIT 10;", Film.class);
+        return data;
+    }
+
+    public void setActor(List<Actor> actor){
+        this.actor = actor;
+    }
+
+    public Integer getFilm_id(){
+        return this.film_id;
+    }
+
+    public List <Actor> getActor(){
+        return this.actor;
+    }
 }

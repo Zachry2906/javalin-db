@@ -14,8 +14,26 @@ public class Inventory {
         return data;
     }
 
-    public static Res<Inventory> getFilmById(Integer film_id){
-        Res<Inventory> data = new DBUtils<Inventory>().get("SELECT inventory_id, store_id FROM inventory WHERE inventory_id = :p1;", film_id, Inventory.class);
+    public static Res<Integer> getFilmById(Integer film_id){
+        Res<Integer> data = new DBUtils<Integer>().get("SELECT inventory_id FROM inventory WHERE film_id = :p1;", film_id, Integer.class);
         return data;
+    }
+
+    public static Res<Integer> getStoreById(Integer film_id){
+        Res<Integer> data = new DBUtils<Integer>().get("SELECT store_id FROM inventory WHERE film_id = :p1;", film_id, Integer.class);
+        return data;
+    }
+
+    public Inventory(Integer inventory_id, Integer store_id){
+        this.inventory_id = inventory_id;
+        this.store_id = store_id;
+    }
+
+    public Integer getInventory_id(){
+        return this.inventory_id;
+    }
+
+    public Integer getStore_id(){
+        return this.store_id;
     }
 }

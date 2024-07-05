@@ -13,8 +13,9 @@ public class FilmCategories {
     private Integer film_id;
     private Integer category_id;
     private java.sql.Timestamp last_update;
+    private Integer inventory_id;
+    private Integer store_id;
     private Film film;
-    private Inventory inventory;
 
     static Sql2o sql2o = DBConnect.getSql2o();
     static Gson gson = new Gson();
@@ -36,11 +37,18 @@ public class FilmCategories {
         return this.film;
     }
 
-    public void setInventory(Inventory inventory){
-        this.inventory = inventory;
+    public Integer getCategory_id(){
+        return this.category_id;
     }
 
-    public Inventory getInventory(){
-        return this.inventory;
+    public void setInventory_id(Integer inventory_id){
+        this.inventory_id = inventory_id;
     }
+
+    public void setStore_id(Integer store_id){
+        this.store_id = store_id;
+    }
+
+
+
 }

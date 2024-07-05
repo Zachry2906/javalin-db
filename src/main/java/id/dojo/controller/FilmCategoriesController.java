@@ -19,9 +19,11 @@ public class FilmCategoriesController {
         List<FilmCategories> filmCategories = data.getData();
         for (FilmCategories filmCategory : filmCategories) {
             Film film = Film.getFilmById(filmCategory.getFilm_id()).getData();
-            Inventory inventory = Inventory.getFilmById(filmCategory.getFilm_id()).getData();
+            Integer inventory = Inventory.getFilmById(filmCategory.getFilm_id()).getData();
+            Integer store = Inventory.getFilmById(filmCategory.getFilm_id()).getData();
             filmCategory.setFilm(film);
-            filmCategory.setInventory(inventory);
+            filmCategory.setInventory_id(inventory);
+            filmCategory.setStore_id(store);
         }
         ctx.json(gson.toJson(data));
     };
