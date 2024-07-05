@@ -6,6 +6,7 @@ import static id.dojo.Main.gson;
 import id.dojo.helper.Res;
 
 public class ActorController {
+    //Handler digunakan untuk mengatur thhp request yang masuk
     public static Handler listActor = ctx -> {
         ctx.json(gson.toJson(testConnect()));
     };

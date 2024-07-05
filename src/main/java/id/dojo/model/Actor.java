@@ -52,10 +52,10 @@ public class Actor {
         this.last_name = last_name;
     }
 
-    public static String listActor(){
-        Res data = new DBUtils().list("SELECT actor_id, first_name, last_name, last_update FROM actor;", Actor.class);
-        return gson.toJson(data);
-    }
+    // public static String listActor(){
+    //     Res data = new DBUtils().list("SELECT actor_id, first_name, last_name, last_update FROM actor;", Actor.class);
+    //     return gson.toJson(data);
+    // }
 
     public static Res<List<Actor>> testConnect(){
         try(Connection con = sql2o.open()){
@@ -76,6 +76,7 @@ public class Actor {
             try {
                 con.createQuery("DELETE FROM film_actor WHERE actor_id = :actor_id")
                         .addParameter("actor_id", actor_id)
+                        //mengasign actor_id ke parameter :actor_id
                         .executeUpdate();
 
                 int delete = con.createQuery("DELETE FROM actor WHERE actor_id = :actor_id")
@@ -122,7 +123,7 @@ public class Actor {
             Res<List<Actor>> res = new Res<List<Actor>>("Berhasil fetch", test);
             return res;
        } catch(Sql2oException ex) {
-           return new Res<List<Actor>>("Gagal fetch: " + ex.getMessage(), null);
+           return new Res<List<Actor>>("Gagal : " + ex.getMessage(), null);
         }
     }
 

@@ -8,4 +8,8 @@ public class Res<T> {
         this.message = message;
         this.data = data;
     }
+
+    public T getData() {
+        return data;
+    }
 }
