@@ -20,7 +20,7 @@ public class FilmCategoriesController {
         for (FilmCategories filmCategory : filmCategories) {
             Film film = Film.getFilmById(filmCategory.getFilm_id()).getData();
             Integer inventory = Inventory.getFilmById(filmCategory.getFilm_id()).getData();
-            Integer store = Inventory.getFilmById(filmCategory.getFilm_id()).getData();
+            Integer store = Inventory.getStoreById(filmCategory.getFilm_id()).getData();
             filmCategory.setFilm(film);
             filmCategory.setInventory_id(inventory);
             filmCategory.setStore_id(store);

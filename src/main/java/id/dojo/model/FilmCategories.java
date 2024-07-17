@@ -17,6 +17,7 @@ public class FilmCategories {
     private Integer store_id;
     private Film film;
 
+
     static Sql2o sql2o = DBConnect.getSql2o();
     static Gson gson = new Gson();
 

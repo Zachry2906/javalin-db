@@ -15,16 +15,16 @@ public class FilmController {
     public static Handler listFilmJoinActor = ctx -> {
         Res<List<Film>> data = Film.listFilmJoinActor();
         List<Film> films = data.getData();
-        
-        if (films != null) {
+
             for (Film film : films) {
+                String title = Film.getFilmById(film.getFilm_id()).getData().getTitle();
+                String description = Film.getFilmById(film.getFilm_id()).getData().getDescription();
+                film.setTitle(title);
+                film.setDescription(description);
                 Res<List<Actor>> actorsRes = Actor.getActorById(film.getFilm_id());
                 List<Actor> actors = actorsRes.getData();
-                if (actors != null) {
                     film.setActor(actors);
-                }
             }
-        }
         
         ctx.json(gson.toJson(data));
     };

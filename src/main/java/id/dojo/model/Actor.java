@@ -9,6 +9,8 @@ import org.sql2o.Sql2oException;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
+
 import com.google.gson.Gson;
 
 import static id.dojo.Main.gson;
@@ -20,7 +22,6 @@ public class Actor {
     private String last_name;
     private Timestamp last_update;
     static Sql2o sql2o = DBConnect.getSql2o();
-    static Connection con = DBConnect.wrapConn();
 
 
     @Override
@@ -69,10 +70,7 @@ public class Actor {
     }
 
     public static Res<List<Actor>> getActorById(Integer film_id) {
-        String sql = "SELECT fa.actor_id, a.first_name, a.last_name, a.last_update " +
-                     "FROM film_actor fa " +
-                     "JOIN actor a ON fa.actor_id = a.actor_id " +
-                     "WHERE fa.film_id = :p1";
+        String sql = "SELECT fa.actor_id, a.first_name, a.last_name, a.last_update FROM film_actor fa JOIN actor a ON fa.actor_id = a.actor_id WHERE fa.film_id = :p1";
         
         Res<List<Actor>> data = new DBUtils<Actor>().listActor(sql, film_id, Actor.class);
             return new Res<>("Berhasil fetch", data.getData());
@@ -186,5 +184,25 @@ public class Actor {
             System.out.println(ex);
             return new Res<>("Gagal delete: " + ex.getMessage(), null);
         }
+    }
+
+    public static Res<List<Actor>> getListActor(Map<String, String> paramList, Integer page) {
+        String sql = "SELECT actor_id, first_name, last_name, last_update FROM actor WHERE TRUE ";
+        String where = "";
+
+        if (paramList.get("first_name") != null && paramList.get("first_name") != "") {
+            where += "AND first_name ILIKE '%" + paramList.get("first_name") + "%'";
+        }
+
+        if (paramList.get("last_name") != null && paramList.get("last_name") != "") {
+            if (where != "") {
+                where += "AND last_name ILIKE '%" + paramList.get("last_name") + "%'";
+            }
+        }
+
+        String limit = " LIMIT 10 OFFSET " + (page - 1) * 10;
+
+        Res data = new DBUtils().list(sql + where + " ORDER BY actor_id " + limit, Actor.class);
+        return data;
     }
 }

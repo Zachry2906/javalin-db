@@ -2,11 +2,33 @@ package id.dojo.controller;
 
 import io.javalin.http.Handler;
 import static id.dojo.model.Actor.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static id.dojo.Main.gson;
 import id.dojo.helper.Res;
+import id.dojo.model.Actor;
 
 public class ActorController {
     //Handler digunakan untuk mengatur thhp request yang masuk
+
+    public static Handler getListActorApi = ctx -> {
+        Map<String, String> paramList = new HashMap<>();
+
+        String page = ctx.pathParam("page");
+
+        String firstname = ctx.queryParam("firstname");
+        String lastname = ctx.queryParam("lastname");
+
+        paramList.put("first_name", firstname);
+        paramList.put("last_name", lastname);
+
+        Res<List<Actor>> res = Actor.getListActor(paramList, Integer.valueOf(page));
+        ctx.json(gson.toJson(res));
+    };
+
     public static Handler listActor = ctx -> {
         ctx.json(gson.toJson(testConnect()));
     };

@@ -14,7 +14,4 @@ public class DBConnect {
             return sql2o;
         }
 
-        public static Connection wrapConn(){
-            return sql2o.open();
-        }
 }
